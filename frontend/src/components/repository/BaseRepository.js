@@ -41,7 +41,8 @@ export default class BaseRepository{
             temp = await this.axios.get(this.fixUrl(`/${this.path}`));
          }
 
-         return await this.afterProcess(temp.data._embedded[this.path]);
+        //  return await this.afterProcess(temp.data._embedded[this.path]);
+         return await this.afterProcess(temp.data);
 
     }
 

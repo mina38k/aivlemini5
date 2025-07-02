@@ -2,6 +2,8 @@ package aivlemini.infra;
 
 import aivlemini.domain.*;
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -11,15 +13,23 @@ import org.springframework.web.bind.annotation.*;
 //<<< Clean Arch / Inbound Adaptor
 
 @RestController
-// @RequestMapping(value="/scripts")
+@RequestMapping(value="/scripts")
 @Transactional
 public class ScriptController {
 
     @Autowired
     ScriptRepository scriptRepository;
+    
+    @GetMapping("")
+    public List<Script> getScripts() {
+    List<Script> list = new ArrayList<>();
+    scriptRepository.findAll().forEach(list::add);
+    return list;
+    }
+
 
     @RequestMapping(
-        value = "/scripts/{id}/requestpublish",
+        value = "/{id}/requestpublish",
         method = RequestMethod.PUT,
         produces = "application/json;charset=UTF-8"
     )
@@ -41,7 +51,7 @@ public class ScriptController {
     }
 
     @RequestMapping(
-        value = "/scripts/{id}/savetemporaryscript",
+        value = "/{id}/savetemporaryscript",
         method = RequestMethod.PUT,
         produces = "application/json;charset=UTF-8"
     )
@@ -62,9 +72,8 @@ public class ScriptController {
         return script;
     }
  
-    @RequestMapping(
-        value = "/scripts/savescript",
-        method = RequestMethod.POST,
+    @PostMapping(
+        value = "/savescript",
         produces = "application/json;charset=UTF-8"
     )
     public Script saveScript(

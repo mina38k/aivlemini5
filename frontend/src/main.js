@@ -18,6 +18,7 @@ const app = createApp(App)
 
 // Setting Config
 axios.defaults.baseURL = '';
+
 app.config.globalProperties.$axios = axios;
 
 // Component

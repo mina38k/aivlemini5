@@ -12,7 +12,7 @@
         />
         <Number
             label="AuthorId"
-            v-model="value.authorId"
+            :modelValue="Number(value.authorId)"
             :editMode="editMode"
         />
         <String
@@ -40,7 +40,7 @@ export default {
     },
     
     data: () => ({
-        path: "scripts",
+        path: "scripts/savescript",
         value: {
         }
     }),
@@ -49,23 +49,6 @@ export default {
     computed:{
     },
     methods: {
-        async save() {
-            try {
-                await axios.post(`/api/scripts/savescript`, this.value)
-                alert('저장 성공')
-            } catch (e) {
-                alert('저장 실패')
-            }
-        },
-        async savetemporaryscript() {
-            try {
-                const id = this.value.id
-                await axios.put(`/api/scripts/${id}/SaveTemporaryScript`, this.value)
-                alert('임시 저장 성공')
-            } catch (e) {
-                alert('임시 저장 실패')
-            }
-        }
     },
 }
 </script>

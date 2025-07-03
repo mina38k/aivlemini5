@@ -16,6 +16,7 @@ loadFonts()
 // Create vue app
 const app = createApp(App)
 
+
 // Setting Config
 // const isCodespace = window.location.hostname.includes('github.dev');
 // axios.defaults.baseURL = isCodespace ? 'https://' + window.location.hostname.replace('8080','8088') : 'http://localhost:8088';

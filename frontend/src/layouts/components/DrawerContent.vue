@@ -35,6 +35,12 @@ import {
                 to: '/userInfos',
             }"
         />
+        <VerticalNavLink
+            :item="{
+                title: '회원가입',
+                to: '/signup',    // 회원가입 페이지 라우터 경로 (필요에 맞게 변경)
+            }"
+        />
         <VerticalNavSectionTitle :item="{ heading: '서재' }" />
         <VerticalNavLink
             :item="{

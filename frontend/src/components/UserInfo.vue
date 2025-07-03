@@ -5,7 +5,7 @@
             v-model="value.userName"
             :editMode="editMode"
         />
-        <Boolean
+        <!-- <Boolean
             label="IsPurchase"
             v-model="value.isPurchase"
             :editMode="editMode"
@@ -19,7 +19,7 @@
             label="PlanEndDate"
             v-model="value.planEndDate"
             :editMode="editMode"
-        />
+        /> -->
         <String
             label="LoginId"
             v-model="value.loginId"
@@ -40,7 +40,7 @@
 </template>
 
 
-<script>
+<!-- <script>
 import BaseEntity from './base-ui/BaseEntity.vue'
 
 export default {
@@ -60,5 +60,29 @@ export default {
     },
     methods: {
     },
+}
+</script> -->
+<script>
+import BaseEntity from './base-ui/BaseEntity.vue'
+
+export default {
+  name: 'UserInfo',
+  mixins:[BaseEntity],
+  props: {
+    editMode: { type: Boolean, default: false },
+    isNew: { type: Boolean, default: false },
+    inList: { type: Boolean, default: true },
+    isSignUpMode: { type: Boolean, default: false } // 추가
+  },
+  methods: {
+    save() {
+      if (this.isSignUpMode) {
+        this.$emit('add', this.value)  // 회원가입 페이지에서 받음
+      } else {
+        // 기존 저장 로직 수행
+        this.defaultSave()
+      }
+    }
+  }
 }
 </script>

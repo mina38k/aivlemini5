@@ -1,91 +1,65 @@
 <template>
-    <v-card outlined style="border-radius: 0; margin-top: 10px; padding-bottom: 10px; background-color: #F4F5FA;">
-        <v-card-title>
-            도서 조회
-        </v-card-title>
-    
-        <v-card-text style="margin-top:-10px;">
-            <v-row no-gutters style="margin: 15px 0px -10px -15px;">
-                <v-col style="max-width:140px;">
-                    <Number class="attributes-list" label="Id" v-model="value.parameters.id" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <String class="attributes-list" label="Title" v-model="value.parameters.title" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <String class="attributes-list" label="AuthorName" v-model="value.parameters.authorName" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <String class="attributes-list" label="Category" v-model="value.parameters.category" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <String class="attributes-list" label="Content" v-model="value.parameters.content" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <String class="attributes-list" label="SummaryContent" v-model="value.parameters.summaryContent" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <String class="attributes-list" label="Image" v-model="value.parameters.image" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <String class="attributes-list" label="PdfPath" v-model="value.parameters.pdfPath" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <Number class="attributes-list" label="Price" v-model="value.parameters.price" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <Boolean class="attributes-list" label="IsBestSeller" v-model="value.parameters.isBestSeller" :editMode="editMode"/>
-                </v-col>
-                <v-col style="max-width:140px;">
-                    <Number class="attributes-list" label="SubscriptionCount" v-model="value.parameters.subscriptionCount" :editMode="editMode"/>
-                </v-col>
-                <v-col>
-                    <v-btn class="gs-query-search-btn contrast-primary-text"
-                        @click="search"
-                        small
-                        style="margin-left: 35px; margin-top: 30px;"
-                        color="primary"
-                    >
-                        <v-icon small>mdi-magnify</v-icon>검색
-                    </v-btn>
-                </v-col>
-            </v-row>
-        </v-card-text>
-    </v-card>
+  <v-container>
+    <v-row>
+      <v-col
+        v-for="book in books"
+        :key="book.id"
+        cols="12"
+        md="4"
+      >
+        <v-card>
+          <v-card-title>{{ book.title }} (ID: {{ book.id }})</v-card-title>
+          <v-card-subtitle>{{ book.authorName }}</v-card-subtitle>
+          <v-card-text>
+            <p><strong>카테고리:</strong> {{ book.category }}</p>
+            <p><strong>내용:</strong> {{ book.content }}</p>
+            <p><strong>요약:</strong> {{ book.summaryContent }}</p>
+            <p v-if="book.image"><strong>이미지 URL:</strong> <a :href="book.image" target="_blank">{{ book.image }}</a></p>
+            <p v-if="book.pdfPath"><strong>PDF 경로:</strong> <a :href="book.pdfPath" target="_blank">{{ book.pdfPath }}</a></p>
+            <p><strong>가격:</strong> {{ book.price }}</p>
+            <p><strong>베스트셀러:</strong> {{ book.isBestSeller ? '예' : '아니오' }}</p>
+            <p><strong>구독 수:</strong> {{ book.subscriptionCount }}</p>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-    export default {
-        name: 'GetAllLibrary',
-        components:{
-        },
-        props: {},
-        data: () => ({
-            editMode: true,
-            value: {
-                apiPath: 'books/search/getAllLibrary',
-                parameters: {}
-            },
-        }),
-        created() {
-        },
-        watch: {
-        },
-        methods: {
-            search() {
-                let search = null;
-                search = this.value;
-                this.$emit('search', search);
-            },
-            change() {
-                this.$emit("update:modelValue", this.value);
-            },
-        }
-    }
-</script>
-<style>
-.attributes-list{
-    margin-left: 15px;
-}
-</style>
+import axios from 'axios'
 
+export default {
+  name: 'GetAllLibrary',
+  data: () => ({
+    books: [],
+    headers: [
+      { text: 'ID', value: 'id' },
+      { text: '제목', value: 'title' },
+      { text: '저자', value: 'authorName' },
+      { text: '카테고리', value: 'category' },
+      { text: '내용', value: 'content' },
+      { text: '요약', value: 'summaryContent' },
+      { text: '이미지', value: 'image' },
+      { text: 'PDF', value: 'pdfPath' },
+      { text: '가격', value: 'price' },
+      { text: '베스트셀러', value: 'isBestSeller' },
+      { text: '구독 수', value: 'subscriptionCount' },
+    ],
+  }),
+  methods: {
+    async search() {
+      try {
+        const response = await axios.get('/books')
+        console.log('받은 데이터:', response.data) 
+        this.books = response.data
+      } catch (error) {
+        console.error('도서 조회 실패:', error)
+      }
+    },
+  },
+  mounted() {
+    this.search()
+  }
+}
+</script>

@@ -33,6 +33,10 @@ export default {
   data: () => ({
     cards: [
       {
+          text: "회원가입",
+          link: "/signup",
+      },
+      {
           text: "작가",
           link: "/authors",
       },

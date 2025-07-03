@@ -24,6 +24,10 @@ const router = createRouter({
       component: () => import('../components/ui/UserInfoGrid.vue'),
     },
     {
+      path: '/signup',
+      component: () => import('../components/ui/SignUp.vue'),
+    },
+    {
       path: '/books',
       component: () => import('../components/ui/BookGrid.vue'),
     },
@@ -34,6 +38,10 @@ const router = createRouter({
     {
       path: '/readings',
       component: () => import('../components/ui/ReadingGrid.vue'),
+    },
+    {
+      path: '/getAllLibraries',
+      component: () => import('../components/GetAllLibrary.vue'),
     },
   ],
 })

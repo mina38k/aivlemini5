@@ -48,6 +48,7 @@ declare module '@vue/runtime-core' {
     SaveTemporaryScript: typeof import('./src/components/SaveTemporaryScript.vue')['default']
     Script: typeof import('./src/components/Script.vue')['default']
     ScriptGrid: typeof import('./src/components/ui/ScriptGrid.vue')['default']
+    SignUp: typeof import('./src/components/ui/SignUp.vue')['default']
     String: typeof import('./src/components/primitives/String.vue')['default']
     ThemeSwitcher: typeof import('./src/@core/components/ThemeSwitcher.vue')['default']
     User: typeof import('./src/components/vo/User.vue')['default']
